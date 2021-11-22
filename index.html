@@ -87,7 +87,21 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "642d4cf88e8e419190c51479438352f1"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+                        
+  <script>
+    class myError extends Error {
+      constructor(message) {
+        super(message); 
+        this.name = "myError"; 
+      }
+    }
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -95,11 +109,34 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      try {
+        // Reference to https://stackoverflow.com/questions/1779013/check-if-string-contains-only-digits
+        if ( firstNum.match(/^[0-9]+$/) == null
+           | secondNum.match(/^[0-9]+$/) == null
+           | firstNum.length == 0
+           | secondNum.length == 0) {
+          throw new myError('Invalid Input');
+        }
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      }
+      catch (err) {
+        if (err instanceof myError) {
+          alert(err);
+        }
+        else {
+          throw err;
+        }
+      }
+      finally {
+        console.log( 'This message is from the finally block' );
+      }
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
+    // Start your code here
+    // You may move this JS to another file if you wish
+    
     errorBtns[0].addEventListener('click', e => {
       console.log('This is a log message');
     });
@@ -180,14 +217,32 @@
       }
       outterFunc();
     });
-    
-    errorBtns[14].addEventListener('click', e => {
-      const n = 0;
-      n = 1;
-    });
 
-    // Start your code here
-    // You may move this JS to another file if you wish
+    errorBtns[14].addEventListener('click', e => { 
+      // Global ReferenceError
+      console.log(my_undefined_var);
+    });
+    
+    // Reference to https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onerror
+    window.onerror = function (msg, url, lineNo, columnNo, error) {
+      if (msg.indexOf('SyntaxError') > -1){
+        alert('SyntaxError: See Browser Console for Detail');
+      } 
+      else if (msg.indexOf('TypeError') > -1){
+        alert('TypeError: See Browser Console for Detail');
+      }
+      else {
+        let message = [
+          'Error : ' + msg,
+          'URL : ' + url,
+          'Line : ' + lineNo,
+          'Column : ' + columnNo,
+          'Error object : ' + JSON.stringify(error)
+        ].join(' \n ');
+        console.log(message);
+      }
+      return false;
+    };
   </script>
 </body>
 
