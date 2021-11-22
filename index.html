@@ -135,6 +135,57 @@
       console.dirxml(document);
     });
 
+    const label = 'This is a group of message';
+
+    errorBtns[8].addEventListener('click', e => {
+      console.group(label);
+    });
+
+    errorBtns[9].addEventListener('click', e => {
+      console.groupEnd(label);
+    });
+
+    errorBtns[10].addEventListener('click', e => {
+      console.table([
+        {
+          column_1: 'some data',
+          column_2: 'some data',
+        },
+        {
+          column_1: 'some data',
+          column_2: 'some data',
+          column_3: 'some data',
+        },
+        {
+          column_1: 'some data',
+          column_2: 'some data',
+        }
+      ]);
+    });
+
+    errorBtns[11].addEventListener('click', e => {
+      console.time();
+    });
+
+    errorBtns[12].addEventListener('click', e => {
+      console.timeEnd();
+    });
+
+    errorBtns[13].addEventListener('click', e => {
+      function outterFunc() {
+        function innerFunc() {
+          console.trace();
+        }
+        innerFunc();
+      }
+      outterFunc();
+    });
+    
+    errorBtns[14].addEventListener('click', e => {
+      const n = 0;
+      n = 1;
+    });
+
     // Start your code here
     // You may move this JS to another file if you wish
   </script>
