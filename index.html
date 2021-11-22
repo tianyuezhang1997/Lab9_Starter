@@ -116,6 +116,21 @@
       console.warn('This is a warning message');
     });
 
+    errorBtns[4].addEventListener('click', e => {
+      const x = 1;
+      const y = 1;
+      const reason = x + '+' + y + ' should be 2';
+      console.assert(x + y === 3, {x, y, reason});
+    });
+
+    errorBtns[5].addEventListener('click', e => {
+      console.clear();
+    });
+
+    errorBtns[6].addEventListener('click', e => {
+      console.dir(document.head);
+    });
+
     // Start your code here
     // You may move this JS to another file if you wish
   </script>
