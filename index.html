@@ -100,9 +100,12 @@
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
-    let logBtns = errorBtns[0];
-    logBtns.addEventListener('click', e => {
+    errorBtns[0].addEventListener('click', e => {
       console.log('This is a log message');
+    });
+
+    errorBtns[1].addEventListener('click', e => {
+      console.error("This is an ERROR message");
     });
 
     // Start your code here
